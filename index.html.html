@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>MigraJOB – Talento y Oportunidad (Prototipo)</title>
+<style>
+:root{--bg:#f4f7fc;--cd:#fff;--tx:#0f1b3d;--mu:#4f5d7a;--bd:#d6deee;--p:#0b1f55;--b:#1f5fe0;--a:#f5a623;--ok:#0d7a54;--wa:#fff4dc;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0a1124;--cd:#141d38;--tx:#eaf0ff;--mu:#aab6d3;--bd:#2a3760;--p:#d3e2ff;--b:#3b73f0;--ok:#4cd6a0;--wa:#3a2e10}}
+:root[data-theme=dark]{--bg:#0a1124;--cd:#141d38;--tx:#eaf0ff;--mu:#aab6d3;--bd:#2a3760;--p:#d3e2ff;--b:#3b73f0;--ok:#4cd6a0;--wa:#3a2e10}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{color:var(--p);line-height:1.2;margin:.2em 0 .5em}h1{font-size:clamp(1.8rem,4vw,2.8rem)}
+a,button,input,select,summary{font:inherit}:focus-visible{outline:3px solid var(--a);outline-offset:2px}
+.bar{background:#0b1f55;color:#fff;padding:6px 12px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:.8rem}
+.bar button{background:transparent;color:#fff;border:1px solid #6d86c9;border-radius:99px;padding:3px 10px;cursor:pointer}.bar button[aria-pressed=true]{background:#fff;color:#0b1f55}
+.tag{background:var(--a);color:#2a1a00;border-radius:99px;padding:1px 9px;font-size:.75rem;font-weight:700}
+.dm{background:var(--wa);color:var(--tx);border:1px dashed var(--a);border-radius:6px;padding:1px 7px;font-size:.72rem;font-weight:600}
+nav{display:flex;gap:4px 14px;flex-wrap:wrap;align-items:center;padding:12px 16px;background:var(--cd);border-bottom:1px solid var(--bd)}
+nav .logo{font-weight:800;font-size:1.3rem;color:var(--p);background:none;border:0;cursor:pointer;margin-right:auto}.logo b{color:var(--b)}
+nav a{color:var(--tx);cursor:pointer;text-decoration:none;padding:4px 2px;border-bottom:2px solid transparent}nav a:hover,nav a[aria-current]{border-color:var(--a)}
+main{max-width:1050px;margin:0 auto;padding:20px 16px 40px}
+.card{background:var(--cd);border:1px solid var(--bd);border-radius:14px;padding:16px;margin:0 0 14px}
+.g{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.btn{background:var(--b);color:#fff;border:0;border-radius:10px;padding:10px 18px;cursor:pointer;font-weight:600}.btn.am{background:var(--a);color:#2a1a00}.btn.ol{background:transparent;color:var(--p);border:2px solid var(--b)}.btn.sm{padding:5px 12px;font-size:.85rem}
+.hero{background:linear-gradient(135deg,#0b1f55,#1f5fe0);color:#fff;border-radius:18px;padding:32px 22px;margin-bottom:18px}.hero h1{color:#fff}.hero p{max-width:640px}
+.hero input{padding:10px;border-radius:10px;border:0;width:min(100%,380px);color:#111}
+label{display:block;font-weight:600;margin:10px 0 3px}input,select{width:100%;padding:9px;border:1px solid var(--bd);border-radius:8px;background:var(--cd);color:var(--tx)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chips label{display:inline-flex;gap:5px;align-items:center;font-weight:400;border:1px solid var(--bd);border-radius:99px;padding:4px 10px;margin:0}.chips input{width:auto}
+.pb{height:10px;background:var(--bd);border-radius:9px;overflow:hidden}.pb i{display:block;height:100%;background:var(--ok)}
+.pct{font-size:2rem;font-weight:800;color:var(--b)}.ok{color:var(--ok);font-weight:600}.mu{color:var(--mu)}.sm{font-size:.88rem}
+.note{background:var(--wa);border-left:4px solid var(--a);padding:8px 12px;border-radius:6px;font-size:.88rem;margin:10px 0}
+.pill{display:inline-block;border:1px solid var(--bd);border-radius:99px;padding:1px 9px;font-size:.8rem;margin:2px}
+.steps{display:flex;gap:6px;margin:10px 0;flex-wrap:wrap}.steps span{padding:3px 10px;border-radius:99px;border:1px solid var(--bd);font-size:.85rem}.steps .on{background:var(--b);color:#fff;border-color:var(--b)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+.bub{max-width:80%;padding:8px 12px;border-radius:12px;margin:6px 0;background:var(--bd)}.bub.me{margin-left:auto;background:var(--b);color:#fff}
+#toast{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom,0px));background:var(--p);color:var(--bg);padding:10px 16px;border-radius:10px;max-width:300px;display:none;z-index:9}
+footer{text-align:center;color:var(--mu);font-size:.85rem;padding:20px 16px}
+.col{min-width:0}@media(max-width:600px){.bub{max-width:95%}}
+@media(prefers-reduced-motion:no-preference){main{animation:f .25s}@keyframes f{from{opacity:0;transform:translateY(6px)}}}
+</style></head><body>
+<div id="app"></div><div id="toast" role="status" aria-live="polite"></div>
+<script>
+const CO=['Andina Logística (Demo)','Casa Verde Salud (Demo)','Pixel Norte Tech (Demo)'];
+const J=[
+{id:1,t:'Auxiliar administrativa bilingüe',c:0,a:'Administración',m:'Híbrido',l:'Miami, FL',s:'$18–22/h',au:1,p:92,mt:['Atención al cliente','Excel','Organización'],rq:['2+ años en oficina','Español e inglés intermedio'],gp:['Facturación electrónica'],w:'Tu experiencia en atención al cliente y Excel coincide con lo central del cargo. Podrías fortalecer la facturación electrónica.'},
+{id:2,t:'Cuidador/a de salud en casa',c:1,a:'Salud',m:'Presencial',l:'Houston, TX',s:'$16–19/h',au:1,p:84,mt:['Empatía y trato al paciente','Primeros auxilios básicos','Disponibilidad de fines de semana'],rq:['Experiencia en cuidado de personas','Disponibilidad por turnos'],gp:['Certificación CPR'],w:'Tu experiencia cuidando personas y tu disponibilidad por turnos encajan. Una certificación CPR sumaría.'},
+{id:3,t:'Soporte técnico nivel 1',c:2,a:'Tecnología',m:'Remoto',l:'Remoto (EE. UU.)',s:'$22–26/h',au:0,p:88,mt:['Resolución de problemas','Windows y redes básicas','Inglés B2'],rq:['1+ año en soporte','Horario flexible'],gp:['Herramientas de tickets (Zendesk)'],w:'Tu trayectoria en soporte y tu inglés cubren los requisitos. Aprender una herramienta de tickets reforzaría tu perfil.'},
+{id:4,t:'Coordinador/a de bodega',c:0,a:'Logística',m:'Presencial',l:'Atlanta, GA',s:'$20–24/h',au:1,p:76,mt:['Control de inventario','Liderazgo de equipos'],rq:['Experiencia en inventarios'],gp:['Montacargas certificado','Software WMS'],w:'Tienes la base en inventarios y liderazgo; faltan certificaciones específicas de bodega.'},
+{id:5,t:'Diseñador/a gráfico junior',c:2,a:'Diseño',m:'Remoto',l:'Remoto (EE. UU.)',s:'$19–23/h',au:0,p:71,mt:['Figma','Comunicación visual'],rq:['Portafolio'],gp:['Motion graphics','Inglés técnico'],w:'Tu portafolio y manejo de Figma son un buen inicio; podrías fortalecer animación y vocabulario técnico.'}];
+const CA=[{n:'Camila Demo',r:'Auxiliar administrativa',sk:'Excel · Atención al cliente · Inglés B1',p:91,w:'Coincide en 4 de 5 habilidades clave y suma 3 años de experiencia administrativa.'},
+{n:'Andrés Demo',r:'Soporte técnico',sk:'Redes · Windows · Inglés B2',p:86,w:'Cubre los requisitos técnicos y tiene disponibilidad inmediata en modalidad remota.'},
+{n:'Lucía Demo',r:'Diseñadora gráfica',sk:'Figma · Branding · Inglés A2',p:78,w:'Portafolio relevante; puede fortalecer animación y comunicación en inglés.'},
+{n:'Tú (perfil demo)',r:'Perfil de la demostración',sk:'Según tu perfil',p:90,w:'Postulación creada durante este recorrido.'}];
+const ST=['Enviada','En revisión','Entrevista'],COL=['Nueva','En revisión','Entrevista','Contratada'],VS=['Pendiente','En revisión','Verificada'];
+const init=()=>({s:'home',role:'c',step:0,job:1,apps:[{j:3,g:1}],vs:0,pub:[],pipe:[{c:0,g:0},{c:1,g:1},{c:2,g:2}],msgs:[{f:'co',t:'Hola, gracias por tu interés. ¿Podemos conversar el jueves a las 10:00?'}],notes:['Bienvenido/a al modo demostración.'],prof:false,adm:false,fa:'',fm:'',cv:false,nm:''});
+let st=init();const $=s=>document.querySelector(s);
+const E=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function toast(m){const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.i);toast.i=setTimeout(()=>t.style.display='none',3200)}
+function go(s,x){Object.assign(st,{s},x||{});render();scrollTo(0,0)}
+function setRole(r){st.role=r;go(r=='c'?'dash':'cdash')}
+function reset(){st=init();render();toast('Demostración reiniciada')}
+const F=(id,l,t='text',v='')=>`<label for="${id}">${l}</label><input id="${id}" type="${t}" value="${v}">`;
+const Sel=(id,l,o,v='')=>`<label for="${id}">${l}</label><select id="${id}">${o.map(x=>`<option ${x==v?'selected':''}>${x}</option>`).join('')}</select>`;
+const jc=j=>`<div class="card"><div class="row"><div><h3>${j.t}</h3><span class="mu sm">${CO[j.c]} · ${j.l} · ${j.m} · ${j.s}</span> <span class="dm">Vacante ficticia</span></div><div><span class="pct">${j.p}%</span><div class="sm mu">afinidad</div></div></div><p><button class="btn sm" onclick="go('job',{job:${j.id}})">Ver detalle y afinidad</button></p></div>`;
+function mc(j){return `<div class="card" style="border:2px solid var(--b)"><div class="row"><h3>Afinidad profesional <span class="dm">Datos ficticios</span></h3><span class="pct">${j.p}%</span></div><div class="pb" role="img" aria-label="${j.p} por ciento"><i style="width:${j.p}%"></i></div>
+<div class="g" style="margin-top:12px"><div><b>Habilidades coincidentes</b><br>${j.mt.map(x=>`<span class="pill ok">✓ ${x}</span>`).join('')}</div><div><b>Requisitos cumplidos</b><br>${j.rq.map(x=>`<span class="pill ok">✓ ${x}</span>`).join('')}</div><div><b>Competencias por fortalecer</b><br>${j.gp.map(x=>`<span class="pill">↗ ${x}</span>`).join('')}</div></div>
+<p><b>¿Por qué te la recomendamos?</b> ${j.w}</p><div class="note">La afinidad no es una probabilidad de contratación. Se explica solo con habilidades, experiencia, formación, idiomas, modalidad y disponibilidad.</div></div>`}
+const stepper=(a,i)=>`<div class="steps">${a.map((x,k)=>`<span class="${k<=i?'on':''}">${x}</span>`).join('')}</div>`;
+const WZ=['Datos básicos','Habilidades','Experiencia','Formación e idiomas','Preferencias','CV'];
+function wzBody(){const i=st.step;
+if(i==0)return F('w1','Nombre completo','text',E(st.nm))+F('w2','Ciudad de residencia')+F('w3','Teléfono','tel');
+if(i==1)return `<fieldset class="chips" style="border:0;padding:0"><legend><b>Elige tus habilidades</b></legend>${['Atención al cliente','Excel','Organización','Soporte técnico','Cuidado de personas','Inventarios','Figma','Liderazgo'].map((x,k)=>`<label><input type="checkbox" ${k<3?'checked':''}> ${x}</label>`).join('')}</fieldset>`;
+if(i==2)return F('e1','Cargo más reciente','text','Asistente administrativa')+F('e2','Organización')+F('e3','Años de experiencia','number','3');
+if(i==3)return Sel('f1','Nivel de formación',['Bachillerato','Técnico','Tecnólogo','Profesional'],'Técnico')+Sel('f2','Inglés',['A1','A2','B1','B2','C1'],'B1')+Sel('f3','Español',['Nativo','Avanzado','Intermedio'],'Nativo');
+if(i==4)return Sel('p1','Área de interés',['Administración','Salud','Tecnología','Logística','Diseño'])+Sel('p2','Modalidad',['Remoto','Híbrido','Presencial'],'Híbrido')+Sel('p3','Disponibilidad',['Inmediata','En 2 semanas','En 1 mes']);
+return `<p>Sube tu CV para extraer habilidades. <span class="dm">Carga simulada</span></p><button class="btn ol" onclick="st.cv=true;render()">${st.cv?'✓ cv_demo.pdf adjuntado':'Adjuntar CV (simulado)'}</button>`}
+function nextWz(){if(st.step==0){const v=$('#w1');if(v&&v.value)st.nm=v.value}if(st.step<5){st.step++;render();return}
+$('#wzb').textContent='Creando perfil…';setTimeout(()=>{st.prof=true;toast('¡Perfil creado! (demostración)');go('dash')},700)}
+function apply(id){if(!st.apps.find(a=>a.j==id)){st.apps.push({j:id,g:0});if(!st.pipe.find(p=>p.c==3))st.pipe.push({c:3,g:0})}toast('Postulación enviada (demostración)');go('apps')}
+function advApp(i){const a=st.apps[i];if(a.g<2){a.g++;if(a.g==2){st.notes.unshift('Nueva notificación: te invitaron a una entrevista.');toast('🔔 Una empresa te escribió (notificación de ejemplo)')}else toast('Estado: '+ST[a.g])}render()}
+function advP(i){const p=st.pipe[i];if(p.g<3)p.g++;render()}
+function advV(){if(st.vs<2){st.vs++;render();toast('Verificación: '+VS[st.vs]+' (demostración)')}}
+function pub(){const t=$('#v1').value||'Vacante demo nueva';st.pub.push({t});toast('Vacante publicada (demostración)');go('cdash')}
+function send(){const v=$('#mi').value.trim();if(!v)return;st.msgs.push({f:st.role=='c'?'ca':'co',t:v});render();$('#mi').focus()}
+function setF(k,v){st[k]=v;render()}
+const S={
+home(){return `<section class="hero"><h1>Conectamos talento con oportunidades</h1><p>El valor de una persona se demuestra en sus habilidades, experiencia y potencial profesional, no en etiquetas sobre su origen o condición migratoria.</p>
+<p><label for="q" style="color:#fff">Busca un empleo</label><input id="q" placeholder="Ej.: soporte técnico, administración…"> <button class="btn am" onclick="go('jobs')">Buscar</button></p>
+<p><button class="btn am" onclick="go('acct')">Buscar empleo</button> <button class="btn" style="background:#fff;color:#0b1f55" onclick="st.role='e';go('creg')">Contratar talento</button></p></section>
+<h2>Matching por competencias</h2><p>La afinidad se explica con habilidades, experiencia, formación, idiomas, modalidad y disponibilidad. Nunca con nacionalidad, origen, visa, género, edad o fotografía.</p>
+<div class="g">${[['1. Crea tu perfil','Muestra tus capacidades en un asistente guiado.'],['2. Descubre afinidad','Recibe recomendaciones explicadas en lenguaje claro.'],['3. Conecta','Postúlate y conversa con empresas.']].map(x=>`<div class="card"><h3>${x[0]}</h3>${x[1]}</div>`).join('')}</div>
+<div class="g"><div class="card"><h3>Para candidatos</h3>Tú decides qué información compartes. Tu perfil no muestra datos migratorios.</div><div class="card"><h3>Para empresas</h3>Candidatos ordenados por afinidad profesional, con las razones del matching.</div></div>
+<h2>Vacantes de ejemplo <span class="dm">Ficticias</span></h2>${J.slice(0,3).map(jc).join('')}
+<div class="card"><b>¿Listo/a para empezar?</b> <button class="btn" onclick="go('acct')">Crear cuenta</button></div>`},
+how(){return `<h1>Cómo funciona</h1><div class="g">${[['Perfil','Creas tu perfil en unos 4 minutos.'],['Matching','Calculamos afinidad con competencias (aquí: datos ficticios).'],['Verificación aparte','La autorización laboral se verifica en un paso privado, separado de tu puntuación de talento.'],['Privacidad','Tú controlas qué compartes.']].map(x=>`<div class="card"><h3>${x[0]}</h3>${x[1]}</div>`).join('')}</div><div class="note">El porcentaje de afinidad no es una probabilidad de contratación.</div>`},
+acct(){return `<h1>¿Cómo quieres usar MigraJOB?</h1><div class="g"><div class="card"><h3>Soy candidato</h3><p>Crea tu perfil y encuentra oportunidades.</p><button class="btn" onclick="go('reg',{role:'c'})">Soy candidato</button></div><div class="card"><h3>Soy empresa</h3><p>Publica vacantes y encuentra talento.</p><button class="btn ol" onclick="go('creg',{role:'e'})">Soy empresa</button></div></div>`},
+reg(){return `<h1>Crea tu cuenta <span class="dm">Simulado</span></h1><div class="card" style="max-width:460px">${F('r1','Nombre','text','Camila Demo')+F('r2','Correo (ficticio)','email','demo@ejemplo.com')+F('r3','Contraseña','password','demo1234')}<p><button class="btn" onclick="st.nm=$('#r1').value;go('wiz',{step:0})">Continuar</button></p><p class="sm mu">No te pedimos nacionalidad, documentos ni categoría migratoria.</p></div>`},
+wiz(){return `<h1>Crea tu perfil</h1>${stepper(WZ,st.step)}<div class="card" style="max-width:560px"><h2>${WZ[st.step]}</h2>${wzBody()}<p>${st.step?`<button class="btn ol" onclick="st.step--;render()">Atrás</button> `:''}<button id="wzb" class="btn" onclick="nextWz()">${st.step==5?'Finalizar perfil':'Siguiente'}</button></p></div>`},
+dash(){const n=st.prof?100:60;return `<h1>Panel del candidato</h1><div class="card"><b>Completitud del perfil: ${n}%</b><div class="pb"><i style="width:${n}%"></i></div></div><h2>Recomendaciones</h2>${[...J].sort((a,b)=>b.p-a.p).slice(0,3).map(jc).join('')}<h2>Postulaciones</h2>${st.apps.map(a=>{const j=J.find(x=>x.id==a.j);return `<div class="card">${j.t} — <b>${ST[a.g]}</b></div>`}).join('')}<button class="btn ol" onclick="go('apps')">Ver seguimiento</button>`},
+jobs(){const L=J.filter(j=>(!st.fa||j.a==st.fa)&&(!st.fm||j.m==st.fm));return `<h1>Vacantes</h1><div class="g">${Sel('fa','Área',['',...new Set(J.map(j=>j.a))],st.fa).replace('<select','<select onchange="setF(\'fa\',this.value)"')}${Sel('fm','Modalidad',['','Remoto','Híbrido','Presencial'],st.fm).replace('<select','<select onchange="setF(\'fm\',this.value)"')}</div><p class="mu">${L.length} vacantes ficticias</p>${L.map(jc).join('')||'<p>Sin resultados.</p>'}`},
+job(){const j=J.find(x=>x.id==st.job),ap=st.apps.find(a=>a.j==j.id);return `<button class="btn ol sm" onclick="go('jobs')">← Volver</button><h1>${j.t}</h1><p class="mu">${CO[j.c]} · ${j.l} · ${j.m} · ${j.s} <span class="dm">Vacante ficticia</span></p>${mc(j)}
+<div class="card"><b>Elegibilidad (aparte de la afinidad)</b><p>${j.au?'Esta vacante requiere autorización de trabajo vigente en EE. UU. La verificación es un paso privado y no influye en el porcentaje de afinidad.':'Esta vacante no especifica requisitos de autorización laboral.'}</p></div>
+${ap?`<p class="ok">✓ Ya te postulaste (${ST[ap.g]})</p>`:`<button class="btn am" onclick="apply(${j.id})">Postularme</button>`}`},
+apps(){return `<h1>Mis postulaciones</h1>${st.apps.map((a,i)=>{const j=J.find(x=>x.id==a.j);return `<div class="card"><b>${j.t}</b> <span class="mu">· ${CO[j.c]}</span>${stepper(ST,a.g)}${a.g<2?`<button class="btn sm ol" onclick="advApp(${i})">Simular avance <span class="dm">Demo</span></button>`:`<button class="btn sm" onclick="go('msg')">Abrir mensaje</button>`}</div>`}).join('')}`},
+creg(){return `<h1>Registro de empresa <span class="dm">Simulado</span></h1><div class="card" style="max-width:520px">${F('c1','Razón social','text','Nuevo Sabor Demo LLC')+F('c2','Identificación fiscal (ficticia)','text','00-0000000')+F('c3','Persona de contacto','text','Contacto Demo')+F('c4','Correo de contacto','email','empresa@ejemplo.com')}<p><button class="btn" onclick="go('ver',{role:'e',vs:0})">Registrar empresa</button></p></div>`},
+ver(){return `<h1>Verificación de la empresa <span class="dm">Demostración</span></h1><div class="card">${stepper(VS,st.vs)}<p>Estado: <b>${VS[st.vs]}</b></p>${st.vs<2?`<button class="btn" onclick="advV()">Simular siguiente estado</button>`:`<p class="ok">✓ Empresa verificada (simulado)</p><button class="btn am" onclick="go('cdash')">Ir al panel</button>`}</div>`},
+cdash(){return `<h1>Panel de empresa</h1><div class="g"><div class="card"><b>Verificación</b><br>${VS[st.vs]} <span class="dm">Demo</span></div><div class="card"><b>Vacantes activas</b><br>${2+st.pub.length}</div><div class="card"><b>Postulaciones</b><br>${st.pipe.length}</div></div>${st.pub.map(p=>`<div class="card">Nueva: ${E(p.t)} <span class="dm">Demo</span></div>`).join('')}<p><button class="btn" onclick="go('pubv')">Publicar vacante</button> <button class="btn ol" onclick="go('cand')">Ver candidatos</button> <button class="btn ol" onclick="go('adm')">Admin (extra)</button></p>`},
+pubv(){return `<h1>Publicar vacante</h1><div class="card" style="max-width:560px">${F('v1','Título','text','Asistente de operaciones')+F('v2','Responsabilidades','text','Coordinar pedidos y atender clientes')+F('v3','Habilidades requeridas','text','Excel, atención al cliente')+F('v4','Rango salarial','text','$18–22/h')+Sel('v5','Modalidad',['Remoto','Híbrido','Presencial'])+Sel('v6','Autorización laboral (requisito objetivo)',['No especificado','Se requiere autorización de trabajo vigente en EE. UU.'])}<p><button class="btn" onclick="pub()">Publicar</button></p></div>`},
+cand(){return `<h1>Candidatos recomendados</h1><p class="mu">Ordenados por afinidad profesional. Sin datos migratorios ni sensibles. <span class="dm">Datos ficticios</span></p>${[...CA].sort((a,b)=>b.p-a.p).map(c=>`<div class="card"><div class="row"><div><h3>${c.n}</h3>${c.r}<br><span class="mu sm">${c.sk}</span></div><span class="pct">${c.p}%</span></div><p>${c.w}</p><div class="note">La afinidad no es una probabilidad de contratación.</div></div>`).join('')}
+<h2>Gestión de postulaciones</h2><div class="g">${COL.map((c,k)=>`<div class="card col"><b>${c}</b>${st.pipe.map((p,i)=>p.g==k?`<div class="card" style="margin-top:8px"><b>${CA[p.c].n}</b>${k<3?`<br><button class="btn sm" onclick="advP(${i})">Avanzar →</button>`:' ✓'}${k==2?` <button class="btn sm ol" onclick="go('msg')">Mensaje</button>`:''}</div>`:'').join('')}</div>`).join('')}</div>`},
+msg(){return `<h1>Mensajes y notificaciones</h1><div class="g"><div class="card"><h3>Conversación <span class="dm">Ejemplo</span></h3>${st.msgs.map(m=>`<div class="bub ${(m.f=='ca')==(st.role=='c')?'me':''}">${E(m.t)}</div>`).join('')}${F('mi','Escribe un mensaje')}<p><button class="btn" onclick="send()">Enviar</button></p></div><div class="card"><h3>🔔 Notificaciones</h3>${st.notes.map(n=>`<p>${n}</p>`).join('')}</div></div>`},
+faq(){return `<h1>Privacidad y preguntas frecuentes</h1>${[['¿Las empresas ven mi nacionalidad o documentos?','No. El perfil que ven las empresas no muestra nacionalidad, documentos ni categoría migratoria.'],['¿Qué significa el porcentaje de afinidad?','Mide coincidencia de competencias. No es una probabilidad de contratación.'],['¿Cómo funciona la verificación de autorización laboral?','Es un paso aparte, privado y sin relación con la puntuación de talento.'],['¿Quién controla mi información?','Tú decides qué compartes y con quién.']].map(x=>`<details class="card"><summary><b>${x[0]}</b></summary><p>${x[1]}</p></details>`).join('')}`},
+adm(){return `<h1>Administración <span class="dm">Demostración</span></h1><div class="g">${[['Usuarios','—'],['Vacantes','—'],['Empresas verificadas','—']].map(x=>`<div class="card"><b>${x[0]}</b><br><span class="pct">${x[1]}</span><br><span class="dm">Métrica ficticia</span></div>`).join('')}</div><div class="card"><b>Nuevo Sabor Demo LLC</b> — ${st.adm?'<span class="ok">Aprobada</span>':'Pendiente'}<p>${st.adm?'':`<button class="btn" onclick="st.adm=true;render();toast('Empresa aprobada (demostración)')">Aprobar empresa</button>`}</p></div>`}};
+function bar(){return `<div class="bar" role="region" aria-label="Modo demostración"><b>Modo demostración</b><span class="tag">Datos ficticios</span><button aria-pressed="${st.role=='c'}" onclick="setRole('c')">Candidato</button><button aria-pressed="${st.role=='e'}" onclick="setRole('e')">Empresa</button><button onclick="reset()">Reiniciar demostración</button></div>`}
+function nav(){const l=(s,t)=>`<a tabindex="0" role="link" ${st.s==s?'aria-current="page"':''} onclick="go('${s}')" onkeydown="if(event.key=='Enter')go('${s}')">${t}</a>`;
+return `<nav aria-label="Principal"><button class="logo" onclick="go('home')">Migra<b>JOB</b></button>${l('how','Cómo funciona')}${l('jobs','Vacantes')}${l(st.role=='c'?'dash':'cdash','Mi panel')}${l('msg','Mensajes')}${l('faq','Privacidad y FAQ')}</nav>`}
+function foot(){return `<footer>MigraJOB – Talento y Oportunidad · Servicio aliado de Inmigración al Día, familia Al Día.<br>Prototipo de demostración: todos los datos son ficticios.</footer>`}
+function render(){const f=document.activeElement&&document.activeElement.id;$('#app').innerHTML=bar()+nav()+'<main>'+S[st.s]()+'</main>'+foot();if(f&&$('#'+f)&&/^(mi)$/.test(f))$('#'+f).focus()}
+render();
+</script></body></html>
